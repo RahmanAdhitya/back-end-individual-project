@@ -44,43 +44,34 @@ const authControllers = {
     const findIndexUsername = usersDB.findIndex((val) => {
       return val.username === newUser.username;
     });
+    const findIndexEmail = usersDB.findIndex((val) => {
+      return val.email === newUser.email;
+    });
     if (findIndexUsername !== -1) {
       feedBack(400, `${newUser.username} not available`);
-    }
-
-    if (!newUser.username) {
+    } else if (!newUser.username) {
       feedBack(400, 'username is required');
     }
 
     // email section
-    const findIndexEmail = usersDB.findIndex((val) => {
-      return val.email === newUser.email;
-    });
-
-    if (findIndexEmail !== -1) {
+    else if (findIndexEmail !== -1) {
       feedBack(400, `${newUser.email} has been registered`, usersDB);
-    }
-
-    if (!newUser.email) {
+    } else if (!newUser.email) {
       feedBack(400, 'email is required');
-    }
-
-    if (!newUser.full_name) {
+    } else if (!newUser.full_name) {
       feedBack(400, 'full_name is required');
     }
 
     // password section
-    if (!newUser.password) {
+    else if (!newUser.password) {
       feedBack(400, 'password is required');
-    }
-
-    if (newUser.password !== repeatPassword) {
+    } else if (newUser.password !== repeatPassword) {
       feedBack(400, 'password not match');
+    } else {
+      newUser.id = nanoid();
+      usersDB.push(newUser);
+      feedBack(200, 'new account created successfuly', usersDB);
     }
-
-    newUser.id = nanoid();
-    usersDB.push(newUser);
-    feedBack(200, 'new account created successfuly', usersDB);
 
     // const findIndexUsername = usersDB.findIndex((val) => {
     //   return val.username === newUser.username;
