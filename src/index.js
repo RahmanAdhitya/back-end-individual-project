@@ -11,7 +11,7 @@ app.use(express.json());
 const PORT = process.env.PORT;
 
 app.use('/content', contentRoutes);
-app.use('/auth', authRoutes);
+app.use('/', authRoutes);
 
 app.listen(PORT, () => {
   console.log('listening in port', PORT);
